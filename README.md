@@ -3,7 +3,7 @@
 This code implements the following paper: 
 
 <!-- > [Learning Generalizable Robotic Reward Functions from In-The-Wild Human Videos](https://sites.google.com/view/batch-exploration).  -->
-> Learning Generalizable Robotic Reward Functions from "In-The-Wild" Human Videos
+> [Learning Generalizable Robotic Reward Functions from "In-The-Wild" Human Videos](https://sites.google.com/view/dvd-human-videos)
 >
 > Annie S. Chen, Suraj Nair, Chelsea Finn, 2021.
 
@@ -57,15 +57,6 @@ All arg descriptions are located in utils.py. The ```traj_length``` arg denotes 
 We test on four different environments, each with a drawer, faucet, mug, and coffee machine. ```env1``` is the original environments, ```env2``` is with changed colors, ```env3``` is with a changed viewpoint, ```env4``` is with an altered object arrangement. 
 
 For planning, we first train a visual dynamics model using Stochastic Variational Video Prediction (SV2P) using 10k episodes of randomly collected data. The code base can be found [here](https://github.com/tensorflow/tensor2tensor). 
-To collect data, run 
-```
-asdf
-```
-
-A sample sv2p model for the original training environment can be found in 
-```
-sv2p_env1/
-```
 
 To run planning with a trained SV2P model, the following is an example command, with the above DVD model:
 ```
