@@ -34,7 +34,7 @@ pip install -e .
 
 ## Training DVD
 
-All default args are listed in [here](https://github.com/annie268/dvd/utils.py).
+All default args are listed in [here](https://github.com/annie268/dvd/blob/main/utils.py).
 
 A pretrained DVD classifier trained on 3 tasks worth of robot demos and 6 tasks worth of human demos is here:
 ```
