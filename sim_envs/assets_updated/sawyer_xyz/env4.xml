@@ -1,0 +1,44 @@
+<mujoco>
+    <include file="../scene/basic_scene2.xml"/>
+    <include file="../objects/assets/drawer_dependencies.xml"/>
+    <include file="../objects/assets/xyz_base_dependencies.xml"/>
+    <include file="../objects/assets/block_dependencies.xml"/>
+    <include file="../objects/assets/coffeemachine_dependencies.xml"/>
+    <include file="../objects/assets/faucet_dependencies.xml"/>
+    <size nconmax="200"/>
+    <worldbody>
+        <include file="sawyer_xyz_base_no_table2_new.xml"></include>
+
+        <camera mode="fixed" name="cam0" pos="-0.3 -0.02 0.5" quat="-0.2 0.2 0.8 -1.2"/>
+        
+        <body name="obj" pos="0.1 0.5 0.1">
+          <freejoint/>
+          <include file="../objects/assets/mug2.xml"/>
+        </body>
+        
+        <body name="drawer" pos="0.1 0.9 0">
+            <include file="../objects/assets/drawer2.xml"/>
+        </body>
+
+        <body name="coffee_machine" pos="0.34 .85 0">
+          <include file="../objects/assets/coffeemachine2.xml"/>
+        </body>
+
+        
+        <body name="faucetBase" pos="-0.15 0.77 0">
+            <include file="../objects/assets/faucet2.xml"/>
+            <site name="handleStartOpen" pos="-0.015 -0.175 0.125" size="0.005" rgba="1 1 1 1"/>
+            <site name="handleStartClose" pos="0.015 -0.175 0.125" size="0.005" rgba="0 0 0 1"/>
+        </body>
+
+    </worldbody>
+
+    <actuator>
+        <position ctrllimited="true" ctrlrange="-1 1" joint="r_close" kp="400"  user="1"/>
+        <position ctrllimited="true" ctrlrange="-1 1" joint="l_close" kp="400"  user="1"/>
+    </actuator>
+    <equality>
+        <weld body1="mocap" body2="hand" solref="0.02 1"></weld>
+    </equality>
+
+</mujoco>
