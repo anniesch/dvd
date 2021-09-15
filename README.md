@@ -11,22 +11,24 @@ This code implements the following paper:
 We are motivated by the goal of generalist robots that can complete a wide range of tasks across many environments. Critical to this is the robot's ability to acquire some metric of task success or reward, which is necessary for reinforcement learning, planning, or knowing when to ask for help. For a general-purpose robot operating in the real world, this reward function must also be able to generalize broadly across environments, tasks, and objects, while depending only on on-board sensor observations (e.g. RGB images). While deep learning on large and diverse datasets has shown promise as a path towards such generalization in computer vision and natural language, collecting high quality datasets of robotic interaction at scale remains an open challenge. In contrast, in-the-wild videos of humans (e.g. YouTube) contain an extensive collection of people doing interesting tasks across a diverse range of settings. In this work, we propose a simple approach, Domain-agnostic Video Discriminator (DVD), that learns multitask reward functions by training a discriminator to classify whether two videos are performing the same task, and can generalize by virtue of learning from a small amount of robot data with a broad dataset of human videos. We find that by leveraging diverse human datasets, this reward function (a) can generalize zero shot to unseen environments, (b) generalize zero shot to unseen tasks, and (c) can be combined with visual model predictive control to solve robotic manipulation tasks on a real WidowX200 robot in an unseen environment from a single human demo.
 
 ## Installation
-1. Clone the repository by running:
+1. Download the Something-Something-V2 dataset using the instructions in the original repo [here](https://github.com/TwentyBN/something-something-v2-baseline).
+
+2. Clone this repository by running:
 ```
-git clone https://github.com/annie268/dvd.git
+git clone https://github.com/anniesch/dvd.git
 cd dvd
 ```
-2. Install Mujoco 2.0 and mujoco-py. Instructions for this are [here](https://github.com/openai/mujoco-py#install-mujoco).
+3. Install Mujoco 2.0 and mujoco-py. Instructions for this are [here](https://github.com/openai/mujoco-py#install-mujoco).
 
-3. Create and activate conda environment with the required prerequisites:
+4. Create and activate conda environment with the required prerequisites:
 ```
 conda env create -f conda_env.yml
 conda activate batch_exp
 ```
 
-4. Our simulation environment depends on Meta-World. Install it [here](https://github.com/tianheyu927/metaworld).
+5. Our simulation environment depends on Meta-World. Install it [here](https://github.com/tianheyu927/metaworld).
 
-5. Install the simulation env by running:
+6. Install the simulation env by running:
 ```
 cd sim_env
 pip install -e .
