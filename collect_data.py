@@ -1,4 +1,4 @@
-from sim_env.tabletop import Tabletop
+from sim_envs.sim_env.tabletop import Tabletop
 
 from replay_buffer.high_dim_replay import ImageBuffer
 
@@ -98,7 +98,7 @@ def get_human_demos(args):
             else:
                 goal = goals[i] + np.random.uniform(-0.04, 0.04, (3,))
                 ob = low_dim_state[:3]
-                imgs, actions, _ = env.move_gripper(ob, goal, args.traj_length)
+                imgs, actions, env_info = env.move_gripper(ob, goal, args.traj_length)
 
             eps_obs.append(imgs[:-1])
             eps_next.append(imgs[1:])
@@ -175,7 +175,7 @@ if __name__ == '__main__':
     parser.add_argument("--random", action='store_true', default=False) # take random actions
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--xml", type=str, default='env1')
-    parser.add_argument("--task_num", type=int, default=5) 
+    parser.add_argument("--task_num", type=int, default=94) 
 
     args = parser.parse_args()
     if not os.path.exists(args.log_dir):
