@@ -23,10 +23,10 @@ cd dvd
 4. Create and activate conda environment with the required prerequisites:
 ```
 conda env create -f conda_env.yml
-conda activate batch_exp
+conda activate dvd
 ```
 
-5. Our simulation environment depends on Meta-World. Install it [here](https://github.com/tianheyu927/metaworld).
+5. Our simulation environment depends on Meta-World. Install it [here](https://github.com/rlworkgroup/metaworld).
 
 6. Install the simulation env by running:
 ```

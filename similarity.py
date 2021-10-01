@@ -46,7 +46,6 @@ def train_similarity(args, train_loader, model, sim_discriminator, loss_class, o
     data_source_iter = iter(train_loader)
     i = 0
     while i < len_dataloader:
-        if i >= 10: break
         # training model using source data (Human data here, has labeled tasks)
         data_source = data_source_iter.next()
         pos_data, anchor_data, neg_data = data_source
@@ -73,7 +72,7 @@ def train_similarity(args, train_loader, model, sim_discriminator, loss_class, o
         class_out = torch.cat((pos_anchor, neg_anchor))  
         sim_labels = torch.cat((pos_anchor_label, neg_anchor_label))
         class_loss = loss_class(class_out, sim_labels)
-               
+                       
         enc = torch.cat((pos_enc, anchor_enc, neg_enc))
         loss = class_loss
 
@@ -136,8 +135,6 @@ def validate_similarity(args, val_loader, model, sim_discriminator, loss_class, 
             pos_data = [pos_data.to(device)]
             anchor_data = [anchor_data.to(device)]
             neg_data = [neg_data.to(device)]
-
-            model.zero_grad()
 
             # Encode videos
             pos_enc = model.encode(pos_data)

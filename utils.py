@@ -21,7 +21,7 @@ def load_args():
     parser.add_argument('--gpus', '-g', default = str(0), help="GPU ids to use. Please enter a comma separated list")
     parser.add_argument('--use_cuda', default=True, help="to use GPUs")
     parser.add_argument('--num_tasks', type=int, default=2, help='number of tasks')
-    parser.add_argument('--human_data_dir', type=str, help='dir to human data', required=True) #'/iris/u/asc8/workspace/humans/Humans/20bn-something-something-v2-all-videos/'
+    parser.add_argument('--human_data_dir', type=str, help='dir to human data', required=True)
     parser.add_argument('--sim_dir', type=str, default='demos/', help='dir to sim data')
     parser.add_argument('--root', type=str, default='./', help='root dir') 
     parser.add_argument('--log_dir', type=str, default='trained_models/', help='log directory')
@@ -32,14 +32,13 @@ def load_args():
     parser.add_argument('--hidden_size', type=int, default=512, help='latent encoding size')
     parser.add_argument('--batch_size', type=int, default=24, help='10 for w/ robot, 20 for just human w/ 72-length trajs, 40 for 10-length trajs')
     parser.add_argument('--traj_length', type=int, default=0, help='length of sequence to train on, 0 means random between 20-40')
-    parser.add_argument('--add_demos', type=int, default=0, help='how many robot demos to add (of each of the several tasks)')
+    parser.add_argument('--add_demos', type=int, default=60, help='how many robot demos to add (of each of the several tasks)')
     parser.add_argument('--lr', type=float, default=1e-2, help='learning rate to begin with')
     parser.add_argument('--pretrained', action='store_true', default=False, help='using pretrained sth sth encoder')
     parser.add_argument('--pretrained_dir', type=str, default='pretrained/video_encoder/') 
-    parser.add_argument('--demo_type', type=str, default='both', help='for robot demos, use true=ground truth demos, sv2p=sv2p demos or both=for both types')
     parser.add_argument('--just_robot', action='store_true', default=False, help='train on only robot demos')
-    parser.add_argument('--robot_tasks', nargs='*', default=[5, 41, 46, 93, 94], help='if using robot demos, which tasks to include robot demos for')
-    parser.add_argument('--human_tasks', nargs='*', default=[5, 41, 44, 46, 93, 94], help='if using robot demos, which tasks to include robot demos for')
+    parser.add_argument('--robot_tasks', nargs='*', default=[5, 41, 93], help='if using robot demos, which tasks to include robot demos for')
+    parser.add_argument('--human_tasks', nargs='*', default=[5, 41, 93], help='if using robot demos, which tasks to include robot demos for')
     parser.add_argument('--similarity', action='store_true', default=False, help='whether to use similarity discriminator')
     parser.add_argument('--demo_batch_val', type=float, default=0.5, help='if using robot demos during sim discriminator training, then value for batching')
     parser.add_argument('--action_dim', type=int, default=5, help='action dim, only used for behavioral cloning baseline (5 for sim, 4 for widowx)')
@@ -53,8 +52,6 @@ def load_args():
     random.seed(args.seed)
     print(args)
     return args
-
-# python train.py --num_tasks 6 --traj_length 0 --log_dir "test/" --similarity --batch_size 24 --im_size 120 --seed 1 --lr 0.01 --pretrained --human_tasks 5 41 44 46 93 94 --human_data_dir /iris/u/asc8/workspace/humans/Humans/20bn-something-something-v2-all-videos/ --sim_dir /iris/u/asc8/workspace/humans/domain-adversarial/dataset/sim/
 
 
 def remove_module_from_checkpoint_state_dict(state_dict):

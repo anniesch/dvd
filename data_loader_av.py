@@ -68,7 +68,7 @@ class VideoFolder(torch.utils.data.Dataset):
                 
         # Every sample in batch: anchor (randomly selected class A), positive (randomly selected class A), 
         # and negative (randomly selected class not A)
-        # Make dictionary for triplet
+        # Make dictionary for similarity triplets
         self.json_dict = defaultdict(list)
         for data in self.json_data:
             self.json_dict[data.label].append(data)

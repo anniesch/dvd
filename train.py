@@ -84,10 +84,21 @@ def main():
         if os.path.isfile(checkpoint_path):
             checkpoint = torch.load(checkpoint_path)
             if args.pretrained:
+                def remove_module_from_checkpoint_state_dict(state_dict):
+                    """
+                    Removes the prefix `module` from weight names that gets added by
+                    torch.nn.DataParallel()
+                    """
+                    from collections import OrderedDict
+                    new_state_dict = OrderedDict()
+                    for k, v in state_dict.items():
+                        name = k[7:]  # remove `module.`
+                        new_state_dict[name] = v
+                    return new_state_dict
+
                 print("Loading in pretrained model")
-                if args.pretrained_dir[-10:] == 'model3D_1/':
-                    checkpoint['state_dict'] = remove_module_from_checkpoint_state_dict(
-                                              checkpoint['state_dict'])
+                checkpoint['state_dict'] = remove_module_from_checkpoint_state_dict(
+                                          checkpoint['state_dict'])
             start_epoch = checkpoint['epoch']
             best_loss = checkpoint['best_loss']
             model.load_state_dict(checkpoint['state_dict'], strict=False)
@@ -105,7 +116,7 @@ def main():
         for p in model.parameters():
             p.requires_grad = False
             
-    print("Trainable params in task classifier:", sum(p.numel() for p in model.parameters() if p.requires_grad))
+    print("Trainable params in encoder:", sum(p.numel() for p in model.parameters() if p.requires_grad))
 
     # define augmentation pipeline
     upscale_size_train = int(args.im_size * 1.4)
@@ -195,9 +206,10 @@ def main():
     # define optimizer
     lr = args.lr
     last_lr = 1e-05
-    params = list(filter(lambda p: p.requires_grad, model.parameters()))
+    params = list(model.parameters())
     if args.similarity:
         params += list(sim_discriminator.parameters())
+        print("Number of discriminator params", sum(p.numel() for p in sim_discriminator.parameters() if p.requires_grad))
         optimizer = torch.optim.SGD(params, lr,
                                  momentum=0.9,
                                  weight_decay=0.00001)
